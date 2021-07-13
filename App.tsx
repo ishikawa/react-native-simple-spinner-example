@@ -1,11 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Spinner } from './Spinner';
 
 export default function App() {
+  const windowWidth = useWindowDimensions().width;
+  const spinnerViewWidth = windowWidth * 0.25;
+  const spinnerWidth = windowWidth * 0.025;
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <Spinner
+        width={spinnerWidth}
+        color="#f33"
+        backgroundColor="#ddd"
+        style={{ width: spinnerViewWidth, height: spinnerViewWidth }}
+      />
       <StatusBar style="auto" />
     </View>
   );
