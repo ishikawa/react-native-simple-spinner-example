@@ -1,26 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
-import { Spinner, SpinnerAndroid } from './Spinner';
+import { StatusBar } from 'expo-status-bar';
+import { Spinner } from './Spinner';
 
 export default function App() {
   const windowWidth = useWindowDimensions().width;
-  const spinnerViewWidth = windowWidth * 0.25;
-  const spinnerWidth = windowWidth * 0.025;
+  const spinnerWidth = windowWidth * 0.25;
+  const spinnerBorderWidth = windowWidth * 0.025;
 
   return (
     <View style={styles.container}>
       <Spinner
-        width={spinnerWidth}
-        color="#ff3333"
+        duration={1500}
+        width={spinnerBorderWidth}
+        color="#f33"
         backgroundColor="#ddd"
-        style={{ width: spinnerViewWidth, height: spinnerViewWidth, marginBottom: 10 }}
-      />
-      <SpinnerAndroid
-        width={spinnerWidth}
-        color="#ff3333"
-        backgroundColor="#ddd"
-        style={{ width: spinnerViewWidth, height: spinnerViewWidth }}
+        style={{ width: spinnerWidth, height: spinnerWidth }}
       />
       <StatusBar style="auto" />
     </View>
