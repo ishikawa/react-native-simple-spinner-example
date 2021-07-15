@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
-import { Spinner } from './Spinner';
+import { Spinner, SpinnerAndroid } from './Spinner';
 
 export default function App() {
   const windowWidth = useWindowDimensions().width;
@@ -12,7 +12,13 @@ export default function App() {
     <View style={styles.container}>
       <Spinner
         width={spinnerWidth}
-        color="#f33"
+        color="#ff3333"
+        backgroundColor="#ddd"
+        style={{ width: spinnerViewWidth, height: spinnerViewWidth, marginBottom: 10 }}
+      />
+      <SpinnerAndroid
+        width={spinnerWidth}
+        color="#ff3333"
         backgroundColor="#ddd"
         style={{ width: spinnerViewWidth, height: spinnerViewWidth }}
       />
