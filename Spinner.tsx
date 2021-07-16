@@ -19,9 +19,9 @@ export const Spinner: React.VFC<{
   backgroundColor: backgroundColorProp,
   style,
 }) => {
-  const animating = animatingProp ?? true;
   const spinValue = useRef(new Animated.Value(0)).current;
 
+  const animating = animatingProp ?? true;
   const duration = durationProp ?? 2000;
   const width = widthProp ?? 5;
   const color = colorProp ?? 'white';
@@ -42,6 +42,7 @@ export const Spinner: React.VFC<{
 
   useEffect(() => {
     if (animating) {
+      spinValue.setValue(0);
       loop.start();
     } else {
       loop.stop();
