@@ -1,38 +1,52 @@
 import React, { useEffect, useRef } from 'react';
+import { useMemo } from 'react';
 import { StyleProp, View, ViewStyle, Animated, Easing } from 'react-native';
 
 const CIRCLE_RADIUS = 9999;
 
 export const Spinner: React.VFC<{
+  animating?: boolean;
   duration?: number | undefined | null;
   width?: number | undefined | null;
   color?: string | undefined | null;
   backgroundColor?: string | undefined | null;
   style?: StyleProp<ViewStyle>;
 }> = ({
-  duration: durationParam,
-  width: widthParam,
-  color: colorParam,
-  backgroundColor: backgroundColorParam,
+  animating: animatingProp,
+  duration: durationProp,
+  width: widthProp,
+  color: colorProp,
+  backgroundColor: backgroundColorProp,
   style,
 }) => {
+  const animating = animatingProp ?? true;
   const spinValue = useRef(new Animated.Value(0)).current;
 
-  const duration = durationParam ?? 2000;
-  const width = widthParam ?? 5;
-  const color = colorParam ?? 'white';
-  const backgroundColor = backgroundColorParam ?? 'rgba(255, 255, 255, 0.6)';
+  const duration = durationProp ?? 2000;
+  const width = widthProp ?? 5;
+  const color = colorProp ?? 'white';
+  const backgroundColor = backgroundColorProp ?? 'rgba(255, 255, 255, 0.6)';
+
+  const loop = useMemo(
+    () =>
+      Animated.loop(
+        Animated.timing(spinValue, {
+          toValue: 360,
+          duration,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        })
+      ),
+    [spinValue, duration]
+  );
 
   useEffect(() => {
-    Animated.loop(
-      Animated.timing(spinValue, {
-        toValue: 360,
-        duration,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      })
-    ).start();
-  }, [spinValue, duration]);
+    if (animating) {
+      loop.start();
+    } else {
+      loop.stop();
+    }
+  }, [loop, animating]);
 
   const rotateValue = spinValue.interpolate({
     inputRange: [0, 360],
