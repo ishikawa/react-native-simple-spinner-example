@@ -1,31 +1,34 @@
 import React, { useEffect, useRef } from 'react';
 import { useMemo } from 'react';
-import { StyleProp, View, ViewStyle, Animated, Easing, ColorValue } from 'react-native';
+import { StyleSheet, StyleProp, View, ViewStyle, Animated, Easing, ColorValue } from 'react-native';
 
 const CIRCLE_RADIUS = 9999;
 
 export const Spinner: React.VFC<{
   animating?: boolean;
-  duration?: number | undefined | null;
-  width?: number | undefined | null;
-  color?: ColorValue | undefined | null;
-  backgroundColor?: ColorValue | undefined | null;
+  hidesWhenStopped?: boolean;
+  duration?: number;
+  width?: number;
+  color?: ColorValue;
+  backgroundColor?: ColorValue;
   style?: StyleProp<ViewStyle>;
-}> = ({
-  animating: animatingProp,
-  duration: durationProp,
-  width: widthProp,
-  color: colorProp,
-  backgroundColor: backgroundColorProp,
-  style,
-}) => {
-  const spinValue = useRef(new Animated.Value(0)).current;
+}> = (props) => {
+  // Props
+  const animating = props.animating ?? true;
+  const hidesWhenStopped = props.hidesWhenStopped ?? true;
+  const duration = props.duration ?? 2000;
+  const width = props.width ?? 5;
+  const color = props.color ?? 'white';
+  const backgroundColor = props.backgroundColor ?? 'rgba(255, 255, 255, 0.6)';
+  const style = StyleSheet.flatten(props.style);
 
-  const animating = animatingProp ?? true;
-  const duration = durationProp ?? 2000;
-  const width = widthProp ?? 5;
-  const color = colorProp ?? 'white';
-  const backgroundColor = backgroundColorProp ?? 'rgba(255, 255, 255, 0.6)';
+  // Only size properties pulled from `style`
+  const spinnerStyle: ViewStyle = {
+    width: style.width,
+    height: style.height,
+  };
+
+  const spinValue = useRef(new Animated.Value(0)).current;
 
   const loop = useMemo(
     () =>
@@ -59,7 +62,7 @@ export const Spinner: React.VFC<{
   //
   // https://github.com/facebook/react-native/issues/9262
   return (
-    <View>
+    <View style={style}>
       <View
         style={[
           {
@@ -68,20 +71,20 @@ export const Spinner: React.VFC<{
             borderColor: backgroundColor,
             borderWidth: width,
           },
-          style,
+          spinnerStyle,
         ]}></View>
       <Animated.View
         style={[
           {
             borderRadius: CIRCLE_RADIUS,
             borderColor: backgroundColor,
-            borderTopWidth: width,
             borderTopColor: color,
+            borderTopWidth: width,
             borderRightWidth: width,
             borderLeftWidth: width,
             transform: [{ rotate: rotateValue }],
           },
-          style,
+          spinnerStyle,
         ]}
       />
     </View>
