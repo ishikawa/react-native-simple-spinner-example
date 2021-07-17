@@ -63,30 +63,34 @@ export const Spinner: React.VFC<{
   // https://github.com/facebook/react-native/issues/9262
   return (
     <View style={style}>
-      <View
-        style={[
-          {
-            position: 'absolute',
-            borderRadius: CIRCLE_RADIUS,
-            borderColor: backgroundColor,
-            borderWidth: width,
-          },
-          spinnerStyle,
-        ]}></View>
-      <Animated.View
-        style={[
-          {
-            borderRadius: CIRCLE_RADIUS,
-            borderColor: backgroundColor,
-            borderTopColor: color,
-            borderTopWidth: width,
-            borderRightWidth: width,
-            borderLeftWidth: width,
-            transform: [{ rotate: rotateValue }],
-          },
-          spinnerStyle,
-        ]}
-      />
+      {animating || !hidesWhenStopped ? (
+        <React.Fragment>
+          <View
+            style={[
+              {
+                position: 'absolute',
+                borderRadius: CIRCLE_RADIUS,
+                borderColor: backgroundColor,
+                borderWidth: width,
+              },
+              spinnerStyle,
+            ]}></View>
+          <Animated.View
+            style={[
+              {
+                borderRadius: CIRCLE_RADIUS,
+                borderColor: backgroundColor,
+                borderTopColor: color,
+                borderTopWidth: width,
+                borderRightWidth: width,
+                borderLeftWidth: width,
+                transform: [{ rotate: rotateValue }],
+              },
+              spinnerStyle,
+            ]}
+          />
+        </React.Fragment>
+      ) : null}
     </View>
   );
 };
