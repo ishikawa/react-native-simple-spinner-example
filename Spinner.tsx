@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useMemo } from 'react';
-import { StyleProp, View, ViewStyle, Animated, Easing } from 'react-native';
+import { StyleProp, View, ViewStyle, Animated, Easing, ColorValue } from 'react-native';
 
 const CIRCLE_RADIUS = 9999;
 
@@ -8,8 +8,8 @@ export const Spinner: React.VFC<{
   animating?: boolean;
   duration?: number | undefined | null;
   width?: number | undefined | null;
-  color?: string | undefined | null;
-  backgroundColor?: string | undefined | null;
+  color?: ColorValue | undefined | null;
+  backgroundColor?: ColorValue | undefined | null;
   style?: StyleProp<ViewStyle>;
 }> = ({
   animating: animatingProp,
