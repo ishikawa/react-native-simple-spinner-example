@@ -21,9 +21,7 @@ export default function App() {
           backgroundColor="#ddd"
           style={{ width: spinnerWidth, height: spinnerWidth }}
         />
-        <TouchableOpacity
-          style={{ borderRadius: 10, backgroundColor: '#ccc', padding: 10, marginTop: 10 }}
-          onPress={() => setAnimating(!animating)}>
+        <TouchableOpacity style={styles.button} onPress={() => setAnimating(!animating)}>
           <Text>{animating ? 'Stop animation' : 'Start animation'}</Text>
         </TouchableOpacity>
       </View>
@@ -38,5 +36,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    borderRadius: 10,
+    backgroundColor: '#ccc',
+    padding: 10,
+    marginTop: 10,
   },
 });
