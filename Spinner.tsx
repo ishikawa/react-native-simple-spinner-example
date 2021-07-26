@@ -1,8 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { StyleSheet, StyleProp, View, ViewStyle, Animated, Easing, ColorValue } from 'react-native';
-
-const CIRCLE_RADIUS = 9999;
 
 export const Spinner: React.VFC<{
   animating?: boolean;
@@ -58,38 +55,21 @@ export const Spinner: React.VFC<{
   });
 
   // In Android, borderRadius + borderXXXWidth is not properly working.
-  // To get around this problem, I use a wrapper view for spin.
-  //
-  // https://github.com/facebook/react-native/issues/9262
   return (
     <View style={style}>
       {animating || !hidesWhenStopped ? (
-        <React.Fragment>
-          <View
-            style={[
-              {
-                position: 'absolute',
-                borderRadius: CIRCLE_RADIUS,
-                borderColor: backgroundColor,
-                borderWidth: width,
-              },
-              spinnerStyle,
-            ]}></View>
-          <Animated.View
-            style={[
-              {
-                borderRadius: CIRCLE_RADIUS,
-                borderColor: backgroundColor,
-                borderTopColor: color,
-                borderTopWidth: width,
-                borderRightWidth: width,
-                borderLeftWidth: width,
-                transform: [{ rotate: rotateValue }],
-              },
-              spinnerStyle,
-            ]}
-          />
-        </React.Fragment>
+        <Animated.View
+          style={[
+            {
+              borderRadius: 9999,
+              borderColor: backgroundColor,
+              borderTopColor: color,
+              borderWidth: width,
+              transform: [{ rotate: rotateValue }],
+            },
+            spinnerStyle,
+          ]}
+        />
       ) : null}
     </View>
   );
